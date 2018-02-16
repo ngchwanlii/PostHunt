@@ -11,6 +11,3 @@ Simple Comment and Post Web App (HackerNews, Reddit Clone)
 1. ```cd app```
 2. ```npm install```
 3. ```npm start```
-
-
-### Deploy to Heroku
