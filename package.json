@@ -33,7 +33,7 @@
   },
   "scripts": {
     "start": "node api-server/server.js",
-    "heroku-postbuild": "cd app/ && npm install && npm install && npm run build"
+    "heroku-postbuild": "cd app/ && npm install && npm install --only=dev --no-shrinkwrap && npm run build"
   },
   "cacheDirectories": [
     "node_modules",
@@ -43,5 +43,9 @@
     "type": "git",
     "url": "https://github.com/ngchwanlii/PostHunt"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "babel-plugin-import": "^1.6.3",
+    "react-app-rewire-less": "^2.1.0",
+    "redux-devtools-extension": "^2.13.2"
+  }
  }
