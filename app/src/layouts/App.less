@@ -1,0 +1,172 @@
+@import '../index.less';
+
+@base-blue-color: #1890ff;
+@base-padding: 100px;
+@banner-font-size: 80px;
+@subtitle-font-size: 35px;
+
+.app-wrapper {
+  height: 100%;
+
+  .app-layout {
+
+    .app-banner-wrapper {
+      height: 500px;
+      width: 100%;
+      padding: @base-padding;
+      margin: 1px auto;
+      background-color: white;
+
+      .app-banner-row {
+        height: 100%;
+        width: 100%;
+
+        .app-banner-title-wrapper {
+          min-height: 300px;
+
+          .app-banner-animate-title-line-wrapper {
+            height: 2px;
+            width: 100%;
+            overflow: hidden;
+
+            .app-banner-animate-title-line {
+              height: 100%;
+              width: 64px;
+              animation: bannerTitleLine 3s ease-in-out 0s infinite;
+              background: linear-gradient(
+                90deg,
+                rgba(24, 144, 255, 0) 0,
+                #1890ff
+              );
+            }
+
+            @keyframes bannerTitleLine {
+              100% {
+                transform: translateX(400px);
+              }
+            }
+          }
+          .app-banner-title {
+            h1 {
+              font-size: @banner-font-size;
+              margin: 10px auto;
+            }
+            font-size: 20px;
+            span {
+              display: block;
+            }
+          }
+        }
+
+        .app-banner-img-wrapper {
+          display: flex;
+          min-height: 300px;
+
+          .app-banner-img-ghost-wrapper {
+            height: 100%;
+            margin: auto;
+            border-radius: 50%;
+            box-shadow: @box-shadow;
+            background: linear-gradient(to left, #00c6ff, #0072ff);
+
+            .app-banner-img-ghost {
+              animation: ghostSpin 5s ease-in-out 0s infinite alternate;
+            }
+
+            @keyframes ghostSpin {
+              from {
+                transform: rotate(0deg) scale(0);
+              }
+              to {
+                transform: rotate(359deg) scale(1);
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .app-feeds-wrapper {
+      padding: @base-padding;
+
+      .app-feeds-alert {
+        width: 50%;
+        margin: 20px auto;
+      }
+
+      .app-feeds-title {
+        height: 100%;
+        padding: 20px 0;
+        h1 {
+          font-size: @subtitle-font-size;
+        }
+      }
+
+      .app-feeds-menu {
+        height: 100%;
+
+        .app-feeds-menu-tab {
+          font-size: 12px;
+          .app-feeds-menu-icon {
+            top: 2px;
+          }
+        }
+      }
+
+      .app-post-content-wrapper {
+        margin: auto 20px;
+        min-height: 280px;
+
+        .app-feeds-post-card-wrapper {
+          width: 100%;
+          height: 100%;
+          cursor: pointer;
+          background: url('../assets/img/stardust.png') no-repeat center center
+            fixed;
+          background-size: cover;
+          overflow: hidden;
+
+          .app-feeds-post-title {
+            text-align: center;
+            color: white;
+            font-size: 25px;
+          }
+        }
+
+        .app-feeds-filter-bar-wrapper {
+          margin: auto;
+          //background-color: red;
+          position: relative;
+          height: 50px;
+          width: 100%;
+
+          .app-feeds-filter-bar-container {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 100%;
+            //background-color: blue;
+            .app-feeds-timestamp-sort-button {
+              color: black;
+              border-color: black;
+              &:hover {
+                color: @base-blue-color;
+                border-color: @base-blue-color;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.app-feed-spinner {
+  margin: 25px auto;
+  padding: 10px;
+
+  .app-feed-spinner-tip {
+    margin: 15px auto;
+    font-size: 15px;
+  }
+}

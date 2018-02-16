@@ -1,0 +1,32 @@
+@base-bg-color: white;
+@base-blue-color: #1890ff;
+
+.post-item-wrapper {
+  background-color: @base-bg-color;
+  padding: 10px;
+
+  &:hover {
+    .post-link-icon {
+      opacity: 1;
+      display: inline-block;
+      margin-left: 1em;
+      transition: all 0.3s ease 0s;
+    }
+  }
+
+  .post-title {
+    &:hover {
+      color: @base-blue-color;
+    }
+  }
+
+  .post-author-title {
+    font-style: italic;
+  }
+
+  .post-link-icon {
+    opacity: .5;
+    margin-left: 1em;
+    display: none;
+  }
+}

@@ -1,0 +1,77 @@
+.post-detail-view-wrapper {
+  .post-detail-view-container {
+    width: 85%;
+    margin: 50px auto;
+
+    .post-detail-view-heading-container {
+      background: url('../assets/img/brillant.png') no-repeat center center;
+      background-size: cover;
+      overflow: hidden;
+
+      .post-detail-view-heading-image {
+        img {
+          min-height: 400px;
+          object-fit: fill;
+          width: 100%;
+        }
+      }
+
+      .post-detail-view-heading-content-container {
+        padding-left: 2em;
+        padding-top: 1em;
+        //height: 80%;
+        //background-color: red;
+      }
+
+      .sider {
+        background-color: inherit;
+        border-left: 1px dashed lightgrey;
+
+        .author-avatar {
+          width: 150px;
+          height: 150px;
+          border-radius: 50%;
+
+          img {
+            width: 100%;
+            height: 100%;
+          }
+        }
+
+        .post-sider-middle-container {
+          text-align: center;
+          margin-top: 0.5em;
+
+          .post-sider-middle-btn {
+            width: 100%;
+            margin: 5px auto;
+          }
+        }
+      }
+    }
+
+    .post-detail-comments-container {
+      margin: 2em auto;
+      height: 100vh;
+
+      .post-detail-comments-sider-container {
+        border-left: 1px groove;
+        background-color: transparent;
+
+        .post-detail-comments-btn-col {
+          margin: 0.5em 0;
+
+          .post-comments-sider-btn {
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+}
+
+// hide scroll bar in comment container
+//.comment-container::-webkit-scrollbar {
+//  display: none;
+//}
+

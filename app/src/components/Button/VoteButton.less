@@ -1,0 +1,34 @@
+@icon-font-size: 7.5px;
+@icon-hover-color: #0082ff;
+@icon-bg-hover-color: #cce6ff;
+
+.vote-button-wrapper {
+  margin: auto;
+
+  .vote-button-icon {
+    display: inline-block;
+    margin-right: 8px;
+    i {
+      font-size: @icon-font-size;
+
+      &:hover {
+        background-color: @icon-bg-hover-color;
+        color: @icon-hover-color;
+      }
+
+    }
+    .vote-button-icon-up {
+      display: block;
+      height: 50%;
+    }
+
+    .vote-button-icon-down {
+      display: block;
+      height: 50%;
+    }
+  }
+
+  .vote-button-number {
+    display: inline-block;
+  }
+}

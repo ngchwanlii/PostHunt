@@ -1,0 +1,6 @@
+const PREFIX = 'ERROR'
+
+export const errorConstants = {
+  SHOW_GLOBAL_ERROR: `${PREFIX}_SHOW_GLOBAL_ERROR`,
+  RESET_GLOBAL_ERROR: `${PREFIX}_RESET_GLOBAL_ERROR`
+}
