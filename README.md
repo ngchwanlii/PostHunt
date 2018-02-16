@@ -1,7 +1,7 @@
 # PostHunt
 Simple Comment and Post Web App (HackerNews, Reddit Clone)
 
-# Demo Usage
+# Local Demo Usage
 ### Backend Server
 1. ```cd api-server```
 2. ```npm start```
@@ -11,3 +11,4 @@ Simple Comment and Post Web App (HackerNews, Reddit Clone)
 2. ```npm start```
 
 
+### Deploy to Heroku
