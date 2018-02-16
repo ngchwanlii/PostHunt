@@ -1,7 +1,13 @@
 # Readable
 Simple Comment and Post Web App (HackerNews, Reddit Clone)
 
-## Fetch API
-### cross-fetch: 
-- Universal WHATWG Fetch API for Node, Browsers and React Native
-- installation: npm install --save cross-fetch
+# Demo Usage
+### Backend Server
+1. ```cd api-server```
+2. ```npm start```
+
+### Frontend UI 
+1. ```cd app```
+2. ```npm start```
+
+
