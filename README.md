@@ -1,4 +1,4 @@
-# Readable
+# PostHunt
 Simple Comment and Post Web App (HackerNews, Reddit Clone)
 
 # Demo Usage
