@@ -4,7 +4,7 @@
   "description": "A server for PostHunt (Udacity Reddit Clone project for ReactND)",
   "main": "index.js",
   "engines": {
-    "node": "8.9.1"
+    "node": "8.9.x"
   },
   "keywords": [
     "posthunt",
