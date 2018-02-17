@@ -322,27 +322,13 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    onSelectCategory: category => {
-      dispatch(categoryActions.selectCategory(category));
-    },
-    onGetAllCategories: () => {
-      dispatch(categoryActions.getAll());
-    },
-    onFetchPosts: category => {
-      dispatch(postActions.fetchPosts(category));
-    },
-    onCloseGlobalError: () => {
-      dispatch(errorActions.resetGlobalError());
-    },
-    onSort: (data, dataType, sortType, sortKey) => {
-      dispatch(commonActions.sort(data, dataType, sortType, sortKey));
-    },
-    onAddPost: newPost => {
-      dispatch(postActions.addPost(newPost));
-    },
-  };
-};
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
+export default withRouter(
+  connect(mapStateToProps, {
+    onSelectCategory: categoryActions.selectCategory,
+    onGetAllCategories: categoryActions.getAll,
+    onFetchPosts: postActions.fetchPosts,
+    onCloseGlobalError: errorActions.resetGlobalError,
+    onSort: commonActions.sort,
+    onAddPost: postActions.addPost,
+  })(App),
+);

@@ -265,24 +265,10 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    onVoting: param => {
-      dispatch(commonActions.vote(param));
-    },
-    onSort: (data, dataType, sortType, sortKey) => {
-      dispatch(commonActions.sort(data, dataType, sortType, sortKey));
-    },
-    onFetchDetailPost: post_id => {
-      dispatch(postActions.fetchDetailPost(post_id));
-    },
-    onFetchCommentsByPostId: post_id => {
-      dispatch(commentActions.fetchCommentsByPostId(post_id));
-    },
-    onAddComment: newComment => {
-      dispatch(commentActions.addComment(newComment));
-    },
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(PostDetailView);
+export default connect(mapStateToProps, {
+  onVoting: commonActions.vote,
+  onSort: commonActions.sort,
+  onFetchDetailPost: postActions.fetchDetailPost,
+  onFetchCommentsByPostId: commentActions.fetchCommentsByPostId,
+  onAddComment: commentActions.addComment
+})(PostDetailView);

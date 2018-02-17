@@ -51,13 +51,9 @@ class PostContainer extends React.Component {
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  onVoting: param => {
-    dispatch(commonActions.vote(param));
-  },
-  onFetchPosts: category => {
-    dispatch(postActions.fetchPosts(category));
-  },
-});
-
-export default withRouter(connect(null, mapDispatchToProps)(PostContainer));
+export default withRouter(
+  connect(null, {
+    onVoting: commonActions.vote,
+    onFetchPosts: postActions.fetchPosts,
+  })(PostContainer),
+);

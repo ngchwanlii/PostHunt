@@ -9,13 +9,7 @@ export const withDelete = Component => {
     }
   }
 
-  const mapDispatchToProps = dispatch => {
-    return {
-      onDelete: (id, dataType) => {
-        dispatch(commonActions.remove(id, dataType));
-      },
-    };
-  };
-
-  return connect(null, mapDispatchToProps)(DeleteWrapper);
+  return connect(null, {
+    onDelete: commonActions.remove,
+  })(DeleteWrapper);
 };
