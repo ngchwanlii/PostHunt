@@ -6,21 +6,24 @@ import { errorActions } from './error-actions';
 
 const getAll = () => dispatch => {
   const request = () => ({ type: categoryConstants.GET_ALL_REQUEST });
-  const success = data => ({ type: categoryConstants.GET_ALL_SUCCESS, data});
+  const success = data => ({ type: categoryConstants.GET_ALL_SUCCESS, data });
   const failure = () => ({ type: categoryConstants.GET_ALL_FAILURE });
+
+  const failureText = 'Failure in fetching all categories';
+  const errorDetail = 'Unable to fetch all categories';
 
   dispatch(request());
 
   return fetch(`${api.url}/categories`, {
     headers: api.headers,
   })
-    .then(res => processResponse(res, 'Failure in fetching all categories'))
+    .then(res => processResponse(res))
     .then(data => {
       dispatch(success(data.categories));
     })
-    .catch(error => {
+    .catch(errorStatus => {
       dispatch(failure());
-      dispatch(errorActions.showGlobalError(error));
+      dispatch(errorActions.showGlobalError(failureText, errorDetail));
     });
 };
 
@@ -31,5 +34,5 @@ const selectCategory = (category = 'all') => ({
 
 export const categoryActions = {
   getAll,
-  selectCategory
+  selectCategory,
 };

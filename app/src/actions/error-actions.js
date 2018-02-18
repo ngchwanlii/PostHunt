@@ -1,16 +1,22 @@
-import {errorConstants} from "../constants/error-constants";
+import { errorConstants } from '../constants/error-constants';
 
-const showGlobalError = (errorText) => ({
+const showGlobalError = (errorText, errorDetail = null) => ({
   type: errorConstants.SHOW_GLOBAL_ERROR,
-  status: "error",
-  error: errorText
-})
+  errorDetail: errorDetail,
+  error: errorText,
+});
+
+const showRedirectMessage = message => ({
+  type: errorConstants.SHOW_REDIRECT_MESSAGE,
+  redirectMessage: message
+});
 
 const resetGlobalError = () => ({
   type: errorConstants.RESET_GLOBAL_ERROR,
-})
+});
 
 export const errorActions = {
   showGlobalError,
-  resetGlobalError
+  showRedirectMessage,
+  resetGlobalError,
 };

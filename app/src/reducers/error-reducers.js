@@ -1,20 +1,34 @@
-import {errorConstants} from "../constants";
+import { errorConstants } from '../constants';
 
-const errorReducers = (state = {
+const initialState = {
+  errorDetail: null,
   globalError: null,
-}, action) => {
-  switch(action.type){
+  redirectNeeded: false,
+  redirectMessage: null,
+};
+
+const errorReducers = (state = initialState, action) => {
+  switch (action.type) {
     case errorConstants.SHOW_GLOBAL_ERROR:
       return {
-        globalError: action.error
-      }
+        ...state,
+        errorDetail: action.errorDetail,
+        globalError: action.error,
+      };
+    case errorConstants.SHOW_REDIRECT_MESSAGE:
+      return {
+        ...state,
+        globalError: null,
+        redirectNeeded: true,
+        redirectMessage: action.redirectMessage,
+      };
     case errorConstants.RESET_GLOBAL_ERROR:
       return {
-        globalError: null
-      }
+        ...initialState,
+      };
     default:
-      return state
+      return state;
   }
-}
+};
 
-export default errorReducers
+export default errorReducers;

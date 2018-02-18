@@ -6,14 +6,13 @@ export class SortMenuButton extends React.Component {
     return nextProps !== this.props;
   }
 
-  handleMenuClick = (data, dataType, sortKey) => elem => {
+  handleMenuClick = (dataType, sortKey) => elem => {
     let sortType = elem.key;
-    this.props.onSort(data, dataType, sortType, sortKey);
+    this.props.onSort(dataType, sortType, sortKey);
   };
 
   render() {
     const {
-      data,
       dataType,
       menus,
       sortKey,
@@ -24,7 +23,7 @@ export class SortMenuButton extends React.Component {
     } = this.props;
 
     const menuList = (
-      <Menu onClick={this.handleMenuClick(data, dataType, sortKey)}>
+      <Menu onClick={this.handleMenuClick(dataType, sortKey)}>
         {menus.map(m => <Menu.Item key={m}>{m}</Menu.Item>)}
       </Menu>
     );

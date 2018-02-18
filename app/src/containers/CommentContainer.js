@@ -1,15 +1,13 @@
 import React from 'react';
 import { Avatar, Col, Icon, List, Row } from 'antd';
-
 import { connect } from 'react-redux';
-
-import './CommentContainer.less';
 import { commonActions } from '../actions/common-actions';
 import { formatTime } from '../utils';
 import { VoteButton } from '../components/Button';
 import EditCommentFormContainer from './EditCommentFormContainer';
 import { withDelete } from '../hoc/withDelete';
 import PopDelete from '../components/PopConfirm/PopDelete';
+import './CommentContainer.less';
 
 class CommentContainer extends React.Component {
   render() {
@@ -24,6 +22,7 @@ class CommentContainer extends React.Component {
         dataSource={comments}
         renderItem={comment => (
           <List.Item
+            key={comment.id}
             actions={[
               <span>
                 <VoteButton
@@ -68,15 +67,10 @@ class CommentContainer extends React.Component {
 }
 
 const mapStateToProps = state => {
-  const {
-    commentsLoading,
-    commentsData,
-    editCommentLoading,
-  } = state.commentReducers;
+  const { commentsLoading, editCommentLoading } = state.commentReducers;
 
   return {
     loading: commentsLoading,
-    comments: commentsData,
     editLoading: editCommentLoading,
   };
 };

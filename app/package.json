@@ -7,6 +7,7 @@
     "avataaars": "^1.1.0",
     "babel-polyfill": "^6.26.0",
     "cross-fetch": "^1.1.1",
+    "immutable": "^3.8.2",
     "lodash": "^4.17.5",
     "react": "^16.2.0",
     "react-app-rewired": "^1.4.0",
@@ -19,6 +20,7 @@
     "redux": "^3.7.2",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.2.0",
+    "reselect": "^3.0.1",
     "uuid": "^3.1.0"
   },
   "scripts": {

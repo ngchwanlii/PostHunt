@@ -9,7 +9,7 @@ const Root = ({store}) => (
   <Provider store={store}>
     <BrowserRouter>
       <Switch>
-        <Route path="/404" component={NotFoundView}/>
+        <Route path="/error" component={NotFoundView}/>
         <Route path="/:category/:post_id" component={PostDetailView}/>
         <Route path="/" component={App}/>
       </Switch>

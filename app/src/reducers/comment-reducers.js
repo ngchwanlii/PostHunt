@@ -41,8 +41,6 @@ const commentReducers = (
         ...state,
         sortKey: action.sortKey,
         sortType: action.sortType,
-        commentsData: action.data,
-        commentsLoading: false,
       };
 
     // add comment

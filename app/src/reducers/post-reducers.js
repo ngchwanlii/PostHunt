@@ -45,10 +45,7 @@ const postReducers = (
         ...state,
         sortKey: action.sortKey,
         sortType: action.sortType,
-        postsData: action.data,
-        postsLoading: action.loading,
       };
-
     // addPost
     case postConstants.POST_ADD_POST_REQUEST:
       return {

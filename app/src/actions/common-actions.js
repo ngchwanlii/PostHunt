@@ -3,27 +3,11 @@ import fetch from 'cross-fetch';
 import { processResponse, update, updateEdit } from '../utils';
 import api from '../api';
 
-const sort = (data, dataType, sortType, sortKey) => {
-  const sortPattern = (p1, p2) => p1[sortKey] - p2[sortKey];
-
-  const sortedData = [...data];
-
-  const constantsType = dataType.toUpperCase();
-
-  const actionKeyType = `${constantsType}_SORT`;
-
-  sortedData.sort((datum1, datum2) => {
-    return ['New', 'Top'].includes(sortType)
-      ? sortPattern(datum2, datum1)
-      : sortPattern(datum1, datum2);
-  });
-
+const sort = (dataType, sortType, sortKey) => {
   return {
-    type: actionKeyType,
-    sortKey: sortKey,
+    type: `${dataType.toUpperCase()}_SORT`,
     sortType: sortType,
-    data: sortedData,
-    loading: false,
+    sortKey: sortKey,
   };
 };
 
@@ -46,6 +30,7 @@ export const vote = ({ dataType, id, option }) => (dispatch, getState) => {
       data: update(chosenData, datum, keyProp),
     };
   };
+  const failureText = `Failure in ${failureOptionName} ${dataType}`;
 
   dispatch(request());
 
@@ -59,13 +44,11 @@ export const vote = ({ dataType, id, option }) => (dispatch, getState) => {
       'Content-Type': 'application/json',
     },
   })
-    .then(res =>
-      processResponse(res, `Failure in ${failureOptionName} ${dataType}`),
-    )
+    .then(res => processResponse(res))
     .then(datum => dispatch(success(datum)))
     .catch(error => {
       dispatch(failure());
-      dispatch(errorActions.showGlobalError(error));
+      dispatch(errorActions.showGlobalError(failureText));
     });
 };
 
@@ -86,6 +69,8 @@ const edit = (id, param, dataType) => (dispatch, getState) => {
       data: updateEdit(chosenData, datum),
     };
   };
+  const failureText = `Failure in editing ${dataType}`;
+  const errorDetail = `Unable to edit selected ${dataType}!`;
 
   dispatch(request());
 
@@ -97,11 +82,11 @@ const edit = (id, param, dataType) => (dispatch, getState) => {
       'Content-Type': 'application/json',
     },
   })
-    .then(res => processResponse(res, `Failure in editing ${dataType}`))
+    .then(res => processResponse(res))
     .then(datum => dispatch(success(datum)))
     .catch(error => {
       dispatch(failure());
-      dispatch(errorActions.showGlobalError(error));
+      dispatch(errorActions.showGlobalError(failureText, errorDetail));
     });
 };
 
@@ -116,12 +101,13 @@ const remove = (id, dataType) => (dispatch, getState) => {
   });
   const success = datum => {
     const chosenData = getState()[`${dataType}Reducers`][`${dataType}sData`];
-
     return {
       type: `${constantsType}_DELETE_${constantsType}_SUCCESS`,
       data: chosenData.filter(data => data.id !== datum.id),
     };
   };
+  const failureText = `Failure in deleting ${dataType}`;
+  const errorDetail = `Unable to delete selected ${dataType}!`;
 
   dispatch(request());
 
@@ -132,12 +118,11 @@ const remove = (id, dataType) => (dispatch, getState) => {
       'Content-Type': 'application/json',
     },
   })
-    .then(res => processResponse(res, `Failure in deleting ${dataType}`))
+    .then(res => processResponse(res))
     .then(datum => dispatch(success(datum)))
     .catch(error => {
-      console.log('CHECK ERROR: ', error);
       dispatch(failure());
-      dispatch(errorActions.showGlobalError(error));
+      dispatch(errorActions.showGlobalError(failureText, errorDetail));
     });
 };
 

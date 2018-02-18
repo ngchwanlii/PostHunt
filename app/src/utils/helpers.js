@@ -1,22 +1,52 @@
+import { createSelector } from 'reselect';
+
+const sortKeySelector = state => state.sortKey;
+const sortTypeSelector = state => state.sortType;
+const sortPattern = (p1, p2, sortKey) => {
+  let elemOne = p1[sortKey];
+  let elemTwo = p2[sortKey];
+  if (elemOne < elemTwo) {
+    return -1;
+  }
+  if (elemOne > elemTwo) {
+    return 1;
+  }
+  return 0;
+};
+
+export const sortIfNeeded = (dataType, sortTypes) =>
+  createSelector(
+    state => state[`${dataType}Data`],
+    sortKeySelector,
+    sortTypeSelector,
+    (data, sortKey, sortType) =>
+      !sortKey
+        ? data
+        : [...data].sort(
+            (datum1, datum2) =>
+              sortTypes.includes(sortType)
+                ? sortPattern(datum2, datum1, sortKey)
+                : sortPattern(datum1, datum2, sortKey),
+          ),
+  );
+
 export const delay = ms => {
-  console.log(`Started delay for ${ms} miliseconds`)
   return new Promise(resolve => {
     setTimeout(() => {
-      resolve('resolved delayed!');
+      resolve('');
     }, ms);
-  })
-}
-
+  });
+};
 
 export const capitalize = (str = '') => {
   return typeof str !== 'string' ? '' : str[0].toUpperCase() + str.slice(1);
 };
 
-export const processResponse = (res, errorText) => {
+export const processResponse = res => {
   if (res.ok) {
     return res.json();
   }
-  throw new Error(errorText);
+  throw res.status
 };
 
 export const formatTime = miliseconds => {

@@ -1,45 +1,39 @@
 import React from 'react';
-import { Affix, message, Button, Col, Divider, Layout, Row, Spin } from 'antd';
-import { AppHeader } from '../components/Header';
-import { AppFooter } from '../components/Footer';
+import {Affix, Button, Col, Divider, Layout, Row, Spin} from 'antd';
+import {AppHeader} from '../components/Header';
+import {AppFooter} from '../components/Footer';
 import './PostDetailView.less';
-import { connect } from 'react-redux';
-import { postActions } from '../actions/post-actions';
-import { delay, formatTime } from '../utils';
-import { commonActions } from '../actions/common-actions';
-import { commentActions } from '../actions/comment-actions';
-import { AddCommentFormContainer, EditPostFormContainer } from '../containers';
-import { AvatarProfile } from '../components/Avatar';
+import {connect} from 'react-redux';
+import {postActions} from '../actions/post-actions';
+import {formatTime, sortIfNeeded} from '../utils';
+import {commonActions} from '../actions/common-actions';
+import {commentActions} from '../actions/comment-actions';
+import {AddCommentFormContainer, EditPostFormContainer} from '../containers';
+import {AvatarProfile} from '../components/Avatar';
 import CommentContainer from '../containers/CommentContainer';
-import { SortMenuButton } from '../components/Button';
-import { withDelete } from '../hoc/withDelete';
+import {SortMenuButton} from '../components/Button';
+import {withDelete} from '../hoc/withDelete';
 import PopDelete from '../components/PopConfirm/PopDelete';
-import { Redirect } from 'react-router-dom';
+import {Redirect} from 'react-router-dom';
+import {errorActions} from '../actions/error-actions';
 
-const { Sider, Content } = Layout;
+const {Sider, Content} = Layout;
 
 const ButtonGroup = Button.Group;
 
 class PostDetailView extends React.Component {
-  state = {
-    redirect: false,
-  };
-
   componentDidMount() {
-    const { match, onFetchDetailPost, onFetchCommentsByPostId } = this.props;
-    const { post_id } = match.params;
+    const {match, onFetchDetailPost, onFetchCommentsByPostId} = this.props;
+    const {post_id} = match.params;
     onFetchDetailPost(post_id);
     onFetchCommentsByPostId(post_id);
   }
 
   componentDidUpdate(prevProps) {
-    const { post } = this.props;
+    const {post, onShowRedirectMessage} = this.props;
     if (post !== prevProps.post) {
-      if (!post) {
-        message.loading('Redirecting to homepage...', 1);
-        delay(2000).then(res => {
-          this.setState({ redirect: true });
-        });
+      if (!post || Object.keys(post).length === 0) {
+        onShowRedirectMessage('Redirecting to home page...');
       }
     }
   }
@@ -50,6 +44,7 @@ class PostDetailView extends React.Component {
 
   render() {
     const {
+      redirectNeeded,
       postLoading,
       addCommentLoading,
       editPostLoading,
@@ -58,13 +53,11 @@ class PostDetailView extends React.Component {
       sortKey,
       sortType,
       onSort,
-      onAddComment,
+      onAddComment
     } = this.props;
 
-    const { redirect } = this.state;
-
     const EditPostButton = props => {
-      const { onClick } = props;
+      const {onClick} = props;
       return (
         <Button className="post-sider-middle-btn" icon="edit" onClick={onClick}>
           Edit Post
@@ -74,14 +67,24 @@ class PostDetailView extends React.Component {
 
     const DeletePostButton = withDelete(PopDelete);
 
+    if (redirectNeeded) {
+      return (
+        <Redirect
+          to={{
+            pathname: '/error',
+            next: '/'
+          }}
+        />
+      );
+    }
+
     return (
       <div className="post-detail-view-wrapper">
-        {redirect && <Redirect to="/" />}
         <Layout>
           <AppHeader>Header</AppHeader>
           <Layout className="post-detail-view-container">
             {postLoading ? (
-              <Spin tip="Fetching post detail..." />
+              <Spin tip="Fetching post detail..."/>
             ) : post ? (
               <div>
                 <Layout className="post-detail-view-heading-container">
@@ -115,10 +118,10 @@ class PostDetailView extends React.Component {
                     </Row>
                     <Row type={'flex'} justify={'center'}>
                       <Col xs={20} className="post-sider-middle-container">
-                        <p style={{ fontStyle: 'italic', textAlign: 'center' }}>
+                        <p style={{fontStyle: 'italic', textAlign: 'center'}}>
                           {`posted by ${post.author}`}
                         </p>
-                        <p style={{ fontStyle: 'italic', textAlign: 'center' }}>
+                        <p style={{fontStyle: 'italic', textAlign: 'center'}}>
                           {`at ${formatTime(post.timestamp)}`}
                         </p>
                       </Col>
@@ -138,7 +141,7 @@ class PostDetailView extends React.Component {
                             <Button
                               icon="delete"
                               type="danger"
-                              style={{ width: '100%' }}
+                              style={{width: '100%'}}
                             >
                               Delete Post
                             </Button>
@@ -148,26 +151,26 @@ class PostDetailView extends React.Component {
                       <Col xs={20} className="post-sider-middle-container">
                         <ButtonGroup className="post-sider-middle-btn">
                           <Button
-                            style={{ width: '33%' }}
+                            style={{width: '33%'}}
                             type="primary"
                             icon="caret-up"
                             onClick={this.handleVoteClick({
                               dataType: 'posts',
                               id: post.id,
-                              option: 'upVote',
+                              option: 'upVote'
                             })}
                           />
-                          <Button style={{ cursor: 'default', width: '33%' }}>
+                          <Button style={{cursor: 'default', width: '33%'}}>
                             {post.voteScore}
                           </Button>
                           <Button
-                            style={{ width: '33%' }}
+                            style={{width: '33%'}}
                             type="primary"
                             icon="caret-down"
                             onClick={this.handleVoteClick({
                               dataType: 'posts',
                               id: post.id,
-                              option: 'downVote',
+                              option: 'downVote'
                             })}
                           />
                         </ButtonGroup>
@@ -179,7 +182,7 @@ class PostDetailView extends React.Component {
                   <Content className="comment-container">
                     <div>
                       <h3>{`COMMENT (${comments.length})`}</h3>
-                      <CommentContainer />
+                      <CommentContainer comments={comments}/>
                     </div>
                   </Content>
                   <Sider className="post-detail-comments-sider-container">
@@ -220,7 +223,7 @@ class PostDetailView extends React.Component {
                             className="post-comments-sider-btn"
                           />
                         </Col>
-                        <Divider dashed style={{ backgroundColor: 'black' }} />
+                        <Divider dashed style={{backgroundColor: 'black'}}/>
                         <Col xs={20} className="post-detail-comments-btn-col">
                           <AddCommentFormContainer
                             buttonTitle={'Add Comment'}
@@ -238,7 +241,7 @@ class PostDetailView extends React.Component {
               </div>
             ) : null}
           </Layout>
-          <AppFooter />
+          <AppFooter/>
         </Layout>
       </div>
     );
@@ -246,22 +249,19 @@ class PostDetailView extends React.Component {
 }
 
 const mapStateToProps = state => {
-  const { postsData, postLoading, editPostLoading } = state.postReducers;
-  const {
-    commentsData,
-    sortKey,
-    sortType,
-    addCommentLoading,
-  } = state.commentReducers;
+  const {postsData, postLoading, editPostLoading} = state.postReducers;
+  const {addCommentLoading, sortKey, sortType} = state.commentReducers;
+  const {redirectNeeded} = state.errorReducers;
 
   return {
+    redirectNeeded,
     post: postsData[0],
     postLoading,
     editPostLoading,
-    comments: commentsData,
+    comments: sortIfNeeded('comments', ['Top', 'New'])(state.commentReducers),
     sortKey,
     sortType,
-    addCommentLoading,
+    addCommentLoading
   };
 };
 
@@ -270,5 +270,6 @@ export default connect(mapStateToProps, {
   onSort: commonActions.sort,
   onFetchDetailPost: postActions.fetchDetailPost,
   onFetchCommentsByPostId: commentActions.fetchCommentsByPostId,
-  onAddComment: commentActions.addComment
+  onAddComment: commentActions.addComment,
+  onShowRedirectMessage: errorActions.showRedirectMessage
 })(PostDetailView);

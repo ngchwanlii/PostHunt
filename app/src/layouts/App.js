@@ -11,7 +11,7 @@ import {
 } from '../assets/svg/icon';
 import { categoryActions, commonActions } from '../actions';
 import { connect } from 'react-redux';
-import { capitalize } from '../utils';
+import { capitalize, sortIfNeeded } from '../utils';
 import { postActions } from '../actions/post-actions';
 import { errorActions } from '../actions/error-actions';
 import { AddPostFormContainer, PostContainer } from '../containers';
@@ -305,7 +305,6 @@ const mapStateToProps = state => {
   const {
     postsLoading,
     addPostLoading,
-    postsData,
     sortType,
     sortKey,
   } = state.postReducers;
@@ -315,7 +314,7 @@ const mapStateToProps = state => {
     loading: categoriesLoading || postsLoading,
     error: globalError,
     categories: categoriesData,
-    posts: postsData,
+    posts: sortIfNeeded('posts', ['Top', 'New'])(state.postReducers),
     addPostLoading,
     sortType,
     sortKey,
